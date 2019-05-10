@@ -1,0 +1,23 @@
+version: '2'
+services:
+
+  node1:
+    image: xemuliam/nifi
+    ports:
+      - 8080:8080
+      - 2181:2181
+      - 2881:2881
+      - 2882:2882
+      - 2888:2888
+      - 3888:3888
+    environment:
+      IS_CLUSTER_NODE: 'cluster-node'
+      ZK_NODES_LIST: 'node1,node2,node3'
+      ZK_MYID: 2
+      ZK_CLIENT_PORT: 2181
+    extra_hosts:
+      - "node1:10.18.0.5"
+      - "node2:10.18.0.7"
+      - "node3:10.18.0.6"
+    network_mode: "host"
+    hostname: "node2"

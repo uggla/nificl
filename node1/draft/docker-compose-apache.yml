@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+
+  node1:
+    image: apache/nifi
+    ports:
+      - 8080:8080
+      - 2181:2181
+      - 2881:2881
+      - 2882:2882
+      - 2888:2888
+      - 3888:3888
+    environment:
+      NIFI_CLUSTER_IS_NODE: "true"
+      NIFI_CLUSTER_ADDRESS: "node1"
+      NIFI_CLUSTER_NODE_PROTOCOL_PORT: 2882
+      NIFI_ZK_CONNECT_STRING: "node1:2181,node2:2181,node3:2181"
+      #NIFI_ZK_ROOT_NODE: "/nifi"
+      NIFI_ELECTION_MAX_WAIT: "2 mins"
+      NIFI_ELECTION_MAX_CANDIDATES: 3
+    extra_hosts:
+      - "node1:174.138.7.50"
+      - "node2:188.166.11.129"
+      - "node3:178.62.205.43"
+    network_mode: "host"
+    hostname: "node1"
+#  node2:
+#    image: apache/nifi
+#    ports:
+#      - 8080
+#    environment:
+#      NIFI_CLUSTER_IS_NODE: "true"
+#      NIFI_CLUSTER_ADDRESS: "node2"
+#      NIFI_CLUSTER_NODE_PROTOCOL_PORT: 2182
+#      NIFI_ZK_CONNECT_STRING: "node1:2181,node2:2182,node3:2183"
+#      #NIFI_ZK_ROOT_NODE: "/nifi"
+#      NIFI_ELECTION_MAX_WAIT: "2 mins"
+#      NIFI_ELECTION_MAX_CANDIDATES: 3
+#  node3:
+#    image: apache/nifi
+#    ports:
+#      - 8080
+#    environment:
+#      NIFI_CLUSTER_IS_NODE: "true"
+#      NIFI_CLUSTER_ADDRESS: "node3"
+#      NIFI_CLUSTER_NODE_PROTOCOL_PORT: 2183
+#      NIFI_ZK_CONNECT_STRING: "node1:2181,node2:2182,node3:2183"
+#      #NIFI_ZK_ROOT_NODE: "/nifi"
+#      NIFI_ELECTION_MAX_WAIT: "2 mins"
+#      NIFI_ELECTION_MAX_CANDIDATES: 3
